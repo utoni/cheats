@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libghack" />
+		<Option pch_mode="2" />
+		<Option default_target="Test32" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Lib32">
+				<Option output="bin/ghack_x86" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/x86/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-march=i386" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DSFML_STATIC=1" />
+					<Add option="-DUNICODE=1" />
+					<Add directory="CSFML-2.1-windows-32bits/CSFML-2.1/include" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-static" />
+				</Linker>
+			</Target>
+			<Target title="Lib64">
+				<Option output="bin/ghack_x64" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/x64/" />
+				<Option type="2" />
+				<Option compiler="gnu_gcc_compiler_mingw64" />
+				<Option createDefFile="1" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-march=athlon64" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DSFML_STATIC=1" />
+					<Add option="-DUNICODE=1" />
+					<Add directory="CSFML-2.1-windows-64bits/CSFML-2.1/include" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-static" />
+				</Linker>
+			</Target>
+			<Target title="Test32">
+				<Option output="bin/RadarTest32" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/x86/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="1" />
+				<Compiler>
+					<Add option="-march=i386" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DUNICODE=1" />
+					<Add directory="CSFML-2.1-windows-32bits/CSFML-2.1/include" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="ghack_x86" />
+					<Add library="csfml-window" />
+					<Add library="csfml-system" />
+					<Add library="csfml-graphics" />
+					<Add directory="bin" />
+					<Add directory="CSFML-2.1-windows-32bits/CSFML-2.1/lib/gcc" />
+					<Add directory="CSFML-2.1-windows-32bits/CSFML-2.1/bin" />
+				</Linker>
+			</Target>
+			<Target title="Test64">
+				<Option output="bin/RadarTest64" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="CSFML-2.1-windows-64bits/CSFML-2.1/bin" />
+				<Option object_output="obj/x64/" />
+				<Option type="1" />
+				<Option compiler="gnu_gcc_compiler_mingw64" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-march=athlon64" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DUNICODE=1" />
+					<Add directory="CSFML-2.1-windows-64bits/CSFML-2.1/include" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="ghack_x64" />
+					<Add library="csfml-window" />
+					<Add library="csfml-system" />
+					<Add library="csfml-graphics" />
+					<Add directory="bin" />
+					<Add directory="CSFML-2.1-windows-64bits/CSFML-2.1/lib/gcc" />
+					<Add directory="CSFML-2.1-windows-64bits/CSFML-2.1/bin" />
+				</Linker>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="ALL" targets="Lib32;Lib64;Test32;Test64;" />
+			<Add alias="All32" targets="Lib32;Test32;" />
+			<Add alias="All64" targets="Lib64;Test64;" />
+		</VirtualTargets>
+		<Unit filename="include/ghack.h">
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="include/log.h">
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="include/mem.h">
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="include/radar.h">
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="src/log.c">
+			<Option compilerVar="CC" />
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="src/mem.c">
+			<Option compilerVar="CC" />
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="src/radar.c">
+			<Option compilerVar="CC" />
+			<Option target="Lib32" />
+			<Option target="Lib64" />
+		</Unit>
+		<Unit filename="test.c">
+			<Option compilerVar="CC" />
+			<Option target="Test32" />
+			<Option target="Test64" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

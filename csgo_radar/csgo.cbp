@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="csgo_hack" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="stable">
+				<Option output="bin/stable" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="dev">
+				<Option output="bin/dev" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DENABLE_DEBUG=1" />
+				</Compiler>
+			</Target>
+			<Target title="hRadar">
+				<Option output="csgo_hack" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-DENABLE_HRADAR=1" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wmain" />
+			<Add option="-Wall" />
+			<Add option="-DPSAPI_VERSION=1 -DUNICODE=1 -D_UNICODE=1" />
+		</Compiler>
+		<Linker>
+			<Add option="-static-libgcc -static" />
+			<Add library="C:\MinGW\lib\libpsapi.a" />
+			<Add library="C:\MinGW\lib\libkernel32.a" />
+		</Linker>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+			<Option target="stable" />
+			<Option target="dev" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

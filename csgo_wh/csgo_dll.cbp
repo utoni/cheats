@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="csgo_dll" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/csgo_dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-Wno-comment" />
+					<Add option="-DBUILD_DLL" />
+					<Add option="-DENABLE_DEBUG=1" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/csgo_dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-DBUILD_DLL" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wno-unknown-pragmas" />
+			<Add directory="C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-static -static-libgcc" />
+			<Add library="C:\MinGW\lib\libpsapi.a" />
+			<Add library="C:\MinGW\lib\libkernel32.a" />
+			<Add library="d3d9" />
+			<Add library="d3dx9" />
+			<Add directory="C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/lib" />
+			<Add directory="C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x86" />
+		</Linker>
+		<Unit filename="include/D9DW.h" />
+		<Unit filename="include/D9DW_Config.h" />
+		<Unit filename="include/D9DW_Rectangle.h" />
+		<Unit filename="include/D9DW_Text.h" />
+		<Unit filename="include/DLLMain.h" />
+		<Unit filename="include/Game.h" />
+		<Unit filename="include/Hook.h" />
+		<Unit filename="src/D9DW.cpp" />
+		<Unit filename="src/D9DW_Rectangle.cpp" />
+		<Unit filename="src/D9DW_Text.cpp" />
+		<Unit filename="src/DLLMain.cpp" />
+		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Hook.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

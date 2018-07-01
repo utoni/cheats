@@ -1,0 +1,144 @@
+# depslib dependency file v1.0
+1440503366 source:c:\users\dev0\src\cheats\csgo_dll\src\d9dw.cpp
+	"DLLMain.h"
+	<cstdio>
+	<d3d9.h>
+	<d3dx9.h>
+	<stdarg.h>
+	<windows.h>
+	<psapi.h>
+	<commctrl.h>
+	"D9DW.h"
+
+1429447254 c:\users\dev0\src\cheats\csgo_dll\include\dllmain.h
+	<windows.h>
+	"D9DW.h"
+
+1430964629 c:\users\dev0\src\cheats\csgo_dll\include\d9dw.h
+	<d3d9.h>
+	<d3dx9.h>
+	<d3d9types.h>
+	<stdbool.h>
+	"Game.h"
+	"D9DW_Config.h"
+	"D9DW_Text.h"
+	"D9DW_Rectangle.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d9.h
+	<stdlib.h>
+	<objbase.h>
+	<windows.h>
+	"d3d9types.h"
+	"d3d9caps.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d9types.h
+	<float.h>
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d9caps.h
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9.h
+	<limits.h>
+	"d3d9.h"
+	"d3dx9math.h"
+	"d3dx9core.h"
+	"d3dx9xof.h"
+	"d3dx9mesh.h"
+	"d3dx9shader.h"
+	"d3dx9effect.h"
+	"d3dx9tex.h"
+	"d3dx9shape.h"
+	"d3dx9anim.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9math.h
+	"d3dx9.h"
+	<math.h>
+	"d3dx9math.inl"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9math.inl
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9core.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9xof.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9mesh.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9shader.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9effect.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9tex.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9shape.h
+	"d3dx9.h"
+
+1274308617 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3dx9anim.h
+
+1430961159 c:\users\dev0\src\cheats\csgo_dll\include\game.h
+	<cstdio>
+	<windows.h>
+	<psapi.h>
+
+1429114787 c:\users\dev0\src\cheats\csgo_dll\include\d9dw_config.h
+
+1430964099 c:\users\dev0\src\cheats\csgo_dll\include\d9dw_text.h
+	<d3d9.h>
+	<d3dx9.h>
+	<stdbool.h>
+
+1430959528 c:\users\dev0\src\cheats\csgo_dll\include\d9dw_rectangle.h
+	<d3d9.h>
+	<d3dx9.h>
+	<stdbool.h>
+	"D9DW_Config.h"
+
+1429386171 source:c:\users\dev0\src\cheats\csgo_dll\src\d9dw_rectangle.cpp
+	"DLLMain.h"
+	"D9DW_Rectangle.h"
+	<cstdio>
+	<d3d9.h>
+	<d3dx9.h>
+
+1430964276 source:c:\users\dev0\src\cheats\csgo_dll\src\d9dw_text.cpp
+	"DLLMain.h"
+	<cstdio>
+	<d3d9.h>
+	<d3dx9.h>
+	"D9DW_Text.h"
+
+1440503387 source:c:\users\dev0\src\cheats\csgo_dll\src\dllmain.cpp
+	"DLLMain.h"
+	<cstdio>
+	<d3d9.h>
+	<stdarg.h>
+	<windows.h>
+	<psapi.h>
+	<commctrl.h>
+	"Hook.h"
+	"D9DW.h"
+	"Game.h"
+
+1440502246 c:\users\dev0\src\cheats\csgo_dll\include\hook.h
+
+1430960427 source:c:\users\dev0\src\cheats\csgo_dll\src\game.cpp
+	<cstdio>
+	<stdlib.h>
+	<math.h>
+	"Game.h"
+
+1430039163 source:c:\users\dev0\src\cheats\csgo_dll\src\hook.cpp
+	<cstdio>
+	<d3d9.h>
+	<d3dx9.h>
+	<stdarg.h>
+	<windows.h>
+	<psapi.h>
+	<commctrl.h>
+	"Hook.h"
+	"Game.h"
+
