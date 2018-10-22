@@ -15,6 +15,7 @@ typedef struct target_ptr
     unsigned long base;
     unsigned long offset;
     unsigned long ptr;
+    std::string pattern;
     bool valid;
     std::string dependency;
     std::set<std::string> children;
@@ -25,9 +26,11 @@ class ModuleMemory
 public:
     ModuleMemory(const native_data& nd);
     virtual ~ModuleMemory();
+    unsigned long scanProcMem(const std::string& name, const std::string& pattern, long offset = 0, bool getPtr = true);
+    unsigned long scanMappedMem(const std::string& name, const std::string& pattern, long offset = 0, bool getPtr = true);
     unsigned long getPtr(const std::string& name);
     unsigned long getPtr(const std::string& name, unsigned long *dest_ptr);
-    unsigned long getPtr(const std::string& name, unsigned long base, unsigned long offset);
+    unsigned long getPtr(const std::string& name, unsigned long base, long offset = 0);
     unsigned long recheckPtr(const std::string& name);
     void revalidateAllPtr();
     bool ptrSetDependency(const std::string& name, const std::string& dependency);
@@ -52,6 +55,7 @@ private:
         else ++ptr_invalid_count;
         return false;
     }
+    unsigned long scanPattern(unsigned long addr, unsigned long size, const std::string& pattern);
 };
 
 #endif // PROCESSMEMORY_H

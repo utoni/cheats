@@ -21,6 +21,7 @@ void initNativeData(native_data *nd)
     nd->read_fn = read_procmem;
     nd->write_fn = write_procmem;
     nd->suspend_fn = suspendProcess;
+    nd->iterate_fn = iterate_mem;
 }
 
 /* see: https://support.microsoft.com/en-us/help/99261/how-to-performing-clear-screen-cls-in-a-console-application */
@@ -81,7 +82,7 @@ error:
     return nd->proc.hndl != NULL;
 }
 
-bool get_module_base(native_data *nd, LPCTSTR module_name)
+bool get_module_info(native_data *nd, LPCTSTR module_name)
 {
     HMODULE hMods[1024];
     DWORD cbNeeded;
@@ -101,7 +102,13 @@ bool get_module_base(native_data *nd, LPCTSTR module_name)
             {
                 if (strncmp(szModName, module_name, MAX_PATH) == 0)
                 {
-                    nd->proc.modbase =(unsigned long)(hMods[i]);
+                    nd->proc.modbase = hMods[i];
+                    MODULEINFO modinfo;
+                    if (GetModuleInformation(nd->proc.hndl, nd->proc.modbase, &modinfo, sizeof modinfo))
+                        nd->proc.modsize = modinfo.SizeOfImage;
+                    else
+                        return false;
+
                     return true;
                 }
             }
@@ -116,7 +123,7 @@ bool read_procmem(const native_data *nd, unsigned long addr,
     SIZE_T bytes_read = 0;
     unsigned long *vmptr = (unsigned long *)addr;
 
-    assert(addr && buffer && siz);
+    assert(buffer && siz);
     if (!ReadProcessMemory(nd->proc.hndl, vmptr, buffer, siz, &bytes_read))
         return false;
     if (bytes_read != siz)
@@ -170,4 +177,23 @@ bool suspendProcess(const native_data *nd, int doResume)
     }
     CloseHandle(processHandle);
     return ret;
+}
+
+unsigned long iterate_mem(const native_data *nd,
+                          unsigned long *addr,
+                          unsigned long *size)
+{
+    MEMORY_BASIC_INFORMATION info;
+    SIZE_T ret;
+
+    ret = VirtualQueryEx(nd->proc.hndl, (LPCVOID) *addr, &info, sizeof info);
+    if (ret != sizeof(info))
+        goto error;
+    *addr = (unsigned long) info.BaseAddress;
+    *size = info.RegionSize;
+    return info.State != MEM_COMMIT;
+error:
+    *addr = 0;
+    *size = 0;
+    return 1;
 }

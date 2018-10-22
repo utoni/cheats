@@ -37,6 +37,8 @@ public:
     bool addCode(const std::string& name, const std::string& code_name,
                  const std::vector<unsigned char>& code);
     bool addCode(const std::string& name, const std::string& code_name,
+                 const std::string& code);
+    bool addCode(const std::string& name, const std::string& code_name,
                  unsigned long siz);
     bool setCode(const std::string& name, const std::string& code_name,
                  const std::vector<unsigned char>& code,

@@ -21,6 +21,7 @@ public:
     }
     bool hasCode(int index);
     CodeGenerator& addCode(const std::vector<unsigned char>& code);
+    CodeGenerator& addCode(const std::string& code);
     CodeGenerator& setCode(int index, const std::vector<unsigned char>& code);
     CodeGenerator& setCodeSized(int index, const std::vector<unsigned char>& code);
     CodeGenerator& setRel32JMP(int index, unsigned long dst, unsigned long src, bool reversed = false);

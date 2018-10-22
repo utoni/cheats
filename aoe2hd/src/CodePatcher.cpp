@@ -29,7 +29,7 @@ bool CodePatcher::addPatch(const std::string& name,
     if (codePatchExists(name))
         return false;
     code_patch patch = {0};
-    patch.addr = nd.proc.modbase + addr;
+    patch.addr = (unsigned long) nd.proc.modbase + addr;
     patch.old_code = old_code;
     patch.new_code = new_code;
     patch.new_offset = new_offset;

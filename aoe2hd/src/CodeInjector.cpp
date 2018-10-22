@@ -49,6 +49,12 @@ bool CodeInjector::addCode(const std::string& name, const std::string& code_name
 }
 
 bool CodeInjector::addCode(const std::string& name, const std::string& code_name,
+             const std::string& code)
+{
+    return false;
+}
+
+bool CodeInjector::addCode(const std::string& name, const std::string& code_name,
                            unsigned long siz)
 {
     assert(siz);

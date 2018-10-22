@@ -36,6 +36,11 @@ CodeGenerator& CodeGenerator::addCode(const std::vector<unsigned char>& code)
     return *this;
 }
 
+CodeGenerator& CodeGenerator::addCode(const std::string& code)
+{
+    return *this;
+}
+
 CodeGenerator& CodeGenerator::setCode(int index, const std::vector<unsigned char>& code)
 {
     codes.at(index) = code;
@@ -52,11 +57,11 @@ CodeGenerator& CodeGenerator::setRel32JMP(int index, unsigned long dst, unsigned
 {
     if (!reversed)
     {
-        dst += nd.proc.modbase - diffRel32JMP(reversed, index);
+        dst += (unsigned long) nd.proc.modbase - diffRel32JMP(reversed, index);
     }
     else
     {
-        src += nd.proc.modbase + diffRel32JMP(reversed, index);
+        src += (unsigned long) nd.proc.modbase + diffRel32JMP(reversed, index);
     }
     auto jmp = x86_relJump(dst, src);
     setCodeSized(index, jmp);
