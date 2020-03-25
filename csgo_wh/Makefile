@@ -24,3 +24,7 @@ csgo_wh: $(patsubst %.cpp,src/%.o,$(CSGOWH_SRC))
 	$(CXX) $(CFLAGS) $(LDFLAGS)  -shared -o $@.dll $^ -lpsapi -luser32 -ld3d9 -ld3dx9
 	@echo 'Finished building target: $@'
 	@echo ' '
+
+
+clean:
+	rm -f csgo_wh.exe *.o *.d

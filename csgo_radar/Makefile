@@ -20,3 +20,7 @@ csgo_radar: main.o
 	$(CC) $(CFLAGS) $(LDFLAGS)  -o $@ $^ -lpsapi
 	@echo 'Finished building target: $@'
 	@echo ' '
+
+
+clean:
+	rm -f csgo_radar.exe *.o *.d

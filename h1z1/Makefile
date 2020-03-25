@@ -7,11 +7,11 @@ TARGETS := h1z1
 
 H1Z1_SRC := main.c
 ifneq ($(strip $(X64)),)
-CFLAGS+=-I../libghack/CSFML-2.1-windows-64bits/CSFML-2.1/include -I../libghack/include
-LDFLAGS+=-L../libghack/CSFML-2.1-windows-64bits/CSFML-2.1/lib/gcc -L../libghack/CSFML-2.1-windows-64bits/CSFML-2.1/bin -L../libghack
+CFLAGS+=-Ilibghack/CSFML-2.1-windows-64bits/CSFML-2.1/include -Ilibghack/include
+LDFLAGS+=-Llibghack/CSFML-2.1-windows-64bits/CSFML-2.1/lib/gcc -Llibghack/CSFML-2.1-windows-64bits/CSFML-2.1/bin -Llibghack
 else
-CFLAGS+=-I../libghack/CSFML-2.1-windows-32bits/CSFML-2.1/include -I../libghack/include
-LDFLAGS+=-L../libghack/CSFML-2.1-windows-32bits/CSFML-2.1/lib/gcc -L../libghack/CSFML-2.1-windows-32bits/CSFML-2.1/bin -L../libghack
+CFLAGS+=-Ilibghack/CSFML-2.1-windows-32bits/CSFML-2.1/include -Ilibghack/include
+LDFLAGS+=-Llibghack/CSFML-2.1-windows-32bits/CSFML-2.1/lib/gcc -Llibghack/CSFML-2.1-windows-32bits/CSFML-2.1/bin -Llibghack
 endif
 
 
@@ -24,10 +24,17 @@ all: $(TARGETS)
 	@echo 'Finished building: $<'
 	@echo ' '
 
+libghack/libghack.dll:
+	make -C libghack
 
-h1z1: main.o
+h1z1: libghack/libghack.dll main.o
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	$(CXX) $(CFLAGS) $(LDFLAGS)  -o $@ $^ -lcsfml-window -lcsfml-system -lcsfml-graphics ../libghack/libghack.dll -lpsapi
+	$(CXX) $(CFLAGS) $(LDFLAGS)  -o $@ $^ -lcsfml-window -lcsfml-system -lcsfml-graphics libghack/libghack.dll -lpsapi
 	@echo 'Finished building target: $@'
 	@echo ' '
+
+
+clean:
+	$(MAKE) -C libghack clean
+	rm -f h1z1.exe *.o *.d

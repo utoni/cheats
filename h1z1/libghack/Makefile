@@ -31,3 +31,6 @@ ghack: $(patsubst %.c,src/%.o,$(GHACK_SRC))
 	$(CXX) $(CFLAGS) $(LDFLAGS)  -shared -o libghack.dll $^ -lcsfml-window -lcsfml-system -lcsfml-graphics
 	@echo 'Finished building target: $@'
 	@echo ' '
+
+clean:
+	rm -f libghack.dll *.o *.d

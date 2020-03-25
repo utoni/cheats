@@ -30,3 +30,7 @@ aoe2hd: $(patsubst %.cpp,src/%.o,$(AOE2HD_SRC)) src/native.o
 	$(CXX) $(CFLAGS) $(LDFLAGS)  -o $@ $^ -lpsapi
 	@echo 'Finished building target: $@'
 	@echo ' '
+
+
+clean:
+	rm -f aoe2hd.exe *.o *.d

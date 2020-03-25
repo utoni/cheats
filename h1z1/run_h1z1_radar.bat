@@ -1,5 +1,5 @@
 @ECHO OFF
-SET PATH=%PATH%;..\libghack\CSFML-2.1-windows-32bits\CSFML-2.1\bin;..\libghack\CSFML-2.1-windows-64bits\CSFML-2.1\bin;..\libghack
+SET PATH=%PATH%;libghack\CSFML-2.1-windows-32bits\CSFML-2.1\bin;libghack\CSFML-2.1-windows-64bits\CSFML-2.1\bin;libghack
 IF NOT "%1" == "" (
 .\%1
 )

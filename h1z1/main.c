@@ -582,7 +582,7 @@ int _cdecl funcOfDeath(DWORD processID)
                                                GAME_MASK,
                                                BPATTERN_SIZ(rpat),
                                                GAME_OFFSET);
-                        adr_game += (UINT64) info.lpBaseOfDll;
+                        adr_game += (ULONG_PTR) info.lpBaseOfDll;
                         //adr_game = 0x142979F20;
                         free(dllBuf);
                         dbg("base pointer: 0x%p", adr_game);

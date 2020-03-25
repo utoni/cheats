@@ -435,8 +435,8 @@ static void printPrettyEntityInfo(struct g_entity *ge)
     wchar_t tm[TEAMLEN+1];
     wchar_t wp[WPNLEN+1];
 
-    memset(tm, '\0', TEAMLEN+1);
-    memset(wp, '\0', WPNLEN+1);
+    memset(tm, '\0', (TEAMLEN+1) * sizeof(tm[0]));
+    memset(wp, '\0', WPNLEN+1 * sizeof(wp[0]));
     switch (ge->p_team)
     {
     case TEAM_NONE:
@@ -636,7 +636,7 @@ int doHack( DWORD processID )
     unsigned int i;
     DWORD cnt = 0;
 
-    memset(sProc, '\0', PROCLEN+1);
+    memset(sProc, '\0', (PROCLEN+1) * sizeof(sProc[0]));
     memset(oe, '\0', MAXPLAYER*sizeof(struct off_ent));
     memset(ge, '\0', MAXPLAYER*sizeof(struct g_entity));
 

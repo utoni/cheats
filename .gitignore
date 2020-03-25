@@ -1,0 +1,6 @@
+/csgo_wh/csgo_wh.dll
+/h1z1/libghack/libghack.dll
+
+*.exe
+*.o
+*.d
