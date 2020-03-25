@@ -3,4 +3,11 @@
 
 *.exe
 *.o
+*.obj
 *.d
+*.tlog
+*.log
+*.pdb
+*.idb
+*.pch
+/.vs
