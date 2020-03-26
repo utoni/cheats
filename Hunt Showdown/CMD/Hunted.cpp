@@ -156,7 +156,7 @@ int wmain(int argc, wchar_t **argv)
 
 							SymbolResolver sresolv;
 							DLLHelper dll(sresolv);
-							if (!dll.Init(targetPID, "./HuntDLL.dll")) {
+							if (!dll.Init(targetPID, "..\DLL\x64\Release\HuntDLL.dll")) {
 								std::wcout << L"DLL Init failed" << std::endl;
 							}
 							if (!dll.VerifyHeader()) {
