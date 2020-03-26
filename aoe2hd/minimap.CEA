@@ -1,0 +1,142 @@
+/* (C) by Toni Uhlig
+ *
+ * HOWTO:
+ *  - download and install Cheat Engine
+ *  - start AoE2 HD Steam
+ *  - open Cheat Engine
+ *  - click on toolbar button "Select a process to open"
+ *  - select "AoK HD.exe" and click "Open"
+ *  - click on "Memory view"
+ *  - a new Window named "Memory Viewer" opens
+ *  - click on "Tools" and "Auto Assemble"
+ *  - a new Window named "Auto assemble" opens
+ *  - click on "File" and "Open"
+ *  - select *THIS* file
+ *  - click "Execute"
+ *  - enjoy the minimap hack
+ */
+
+aobScan(MINIMAP_FN, 53 FF 75 08 FF 75 FC FF 90 E0 00 00 00 5B)
+aobScan(DRAW_MINIMAP_FN, 55 8B EC 83 EC 08 8B 45 18)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+push ebx
+/* safety checks */
+sub edx,0
+jnz nothing
+cmp [ebp+8],FF // check if minimap x coord in range
+jg nothing
+cmp [ebp-4],FF // check if minimap y coord in range
+jg nothing
+
+/* check if a valid entity (and not a stump) */
+mov ebx,[esi+C]
+movzx ebx, byte ptr [ebx+96]
+cmp ebx,0 // static entity
+je nothing
+cmp ebx,A // birds
+je nothing
+
+push esi
+push 1   // minimap object type
+
+movzx ebx, byte ptr [ebp+C] // minimap object color
+push ebx
+mov ebx,[ebp+8] // minimap x
+push ebx
+mov ebx,[ebp-4] // minimap y
+push ebx
+nop
+mov eax,[edi] // minimap object pointer
+mov ecx,edi
+
+// draw minimap elements without netcode sync
+push 0 // NULL -> fake return addr
+push ebp
+mov ebp,esp
+sub esp,08
+mov dx,[ebp+C] // minimap x coord
+push ebx
+mov ebx,ecx
+push esi
+mov si,[ebp+08] // minimap y coord
+push edi
+movsx eax, word ptr [ebx+0000016C]
+movsx ecx,si
+sub eax,ecx
+movsx edi,dx
+dec edi
+add eax,edi
+cmp si,dx
+movzx ecx,si
+lea edi,[eax+eax*8]
+movzx eax,dx
+cmovge ecx,eax
+movzx eax,cx
+mov ecx,[ebx+00000168]
+cwde
+movd xmm0,eax
+cvtdq2ps xmm0,xmm0
+
+mulss xmm0,[ecx+edi*4+18]
+movzx edx, word ptr [ecx+edi*4]
+movsx eax,dx
+
+lea ecx,[eax+eax*2]
+mov eax,[ebx+00000164]
+mov cx,[eax+ecx*2+02]
+add cx,[ebx+000000B8]
+
+cvttss2si eax,xmm0
+add cx,ax
+mov ax,[ebx+00000170]
+add ax,[ebx+000000BC]
+movzx esi,cx
+add ax,dx
+mov ecx,[ebp+0C]
+
+movzx edx,ax
+movzx eax,byte ptr [ebp+10]
+movsx ecx,dx
+
+push eax
+movsx edx,si
+lea eax,[ecx+02]
+push eax
+lea eax,[edx+02]
+push eax
+lea eax,[ecx-01]
+mov ecx,[ebx+0C]
+push eax
+lea eax,[edx-01]
+push eax
+call DRAW_MINIMAP_FN
+
+/* clean me up */
+pop edi
+pop esi
+pop ebx
+mov esp,ebp
+pop ebp
+add esp,18
+
+nothing:
+pop ebx
+originalcode:
+pop edi
+pop esi
+mov esp,ebp
+pop ebp
+
+exit:
+jmp returnhere
+
+MINIMAP_FN+E:
+jmp newmem
+returnhere:
+

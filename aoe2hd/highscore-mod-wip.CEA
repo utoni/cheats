@@ -1,0 +1,482 @@
+aobScan(HIGHSCORE_FN, ?? ?? ?? ?? ?? ?? 66 0F 1F 44 00 00 8A 01 41 84 C0 75)
+aobScan(DRAW_HIGHSCORE_FN, C2 10 00 CC CC CC CC CC CC CC CC 55 8B EC 6A FF 68 ?? ?? ?? ?? 64 A1 ?? ?? ?? ?? 50)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+/* orig draw function */
+/* FF B5 7C FF FF FF 2B 8D 78 FF FF FF 8D 45 D8 50 51 52 8D 45 8C 50 8D 4D C0 E8 ?? ?? ?? ?? */
+push [ebp-00000084]
+sub ecx,[ebp-00000088]
+lea eax,[ebp-28]
+push eax
+push ecx
+push edx
+lea eax,[ebp-74]
+push eax
+lea ecx,[ebp-40]
+call DRAW_HIGHSCORE_FN+B
+/* EOF orig draw function */
+
+pushad
+
+push ecx
+push ebx
+push edx
+
+push [ebp-80]
+/* code replaced with NOPs */
+/* 8D 45 D8 50 51 52 8D 45 8C 50 8D 4D C0 E8 ?? ?? ?? ?? */
+lea eax,[ebp-28]
+push eax
+push ecx
+push edx
+lea eax,[ebp-74]
+push eax
+lea ecx,[ebp-40]
+call DRAW_HIGHSCORE_FN+B
+/* EOF code replaced with NOPs */
+
+pop edx
+pop ebx
+pop ecx
+
+/* backup the original message from the UIText struct */
+push ebx
+xor eax,eax
+xor ebx,ebx
+backup_origmsg_strlen:
+mov bl,[edx+eax]
+inc eax
+cmp bl,0
+jne backup_origmsg_strlen
+pop ebx
+sub esp,eax
+push eax
+
+push ebx
+xor ebx,ebx
+backup_origmsg_strcpy:
+dec eax
+mov bl,[edx+eax]
+mov [esp+eax+8],bl
+cmp eax,0
+jnz backup_origmsg_strcpy
+pop ebx
+push edx
+
+nop
+nop
+nop
+
+sub ecx,ebx
+cmp ecx,19 // valid highscore entry?
+jl non_highscore_text
+cmp ecx,30 // valid highscore entry?
+jg non_highscore_text
+push [ebp-80] // arg5 for draw UIText
+lea eax,[ebp-28]
+push ebx
+xor ebx,ebx
+mov bx,word ptr [eax+4],
+sub ebx,200 // new y-coord of new UI text
+
+push eax
+call get_player_info
+/*
+ * The address of player struct found and available in eax
+ * or NULL if not found or not a player.
+ */
+cmp eax,0
+jz no_player_info
+
+mov [edx],20202020
+mov [edx+4],20202020
+mov [edx+8],20202020
+mov [edx+C],20202020
+mov [edx+10],20202020
+mov [edx+14],20202020
+mov [edx+18],20202020
+mov [edx+1C],20202020
+mov [edx+20],20202020
+mov [edx+24],20202020
+mov [edx+28],20202020
+mov [edx+2C],20202020
+mov [edx+30],20202020
+mov [edx+34],20202020
+mov [edx+38],20202020
+mov [edx+3C],20202020
+
+push ebx
+push edx
+/* WOOD */
+movss  xmm0,DWORD PTR [eax+4] // wood as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert wood int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'/'
+inc edx
+inc edx
+/* FOOD */
+movss  xmm0,DWORD PTR [eax] // food as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert food int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'/'
+inc edx
+inc edx
+/* GOLD */
+movss  xmm0,DWORD PTR [eax+C] // gold as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert gold int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'/'
+inc edx
+inc edx
+/* STONE */
+movss  xmm0,DWORD PTR [eax+C] // stone as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert stone int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'|'
+inc edx
+inc edx
+/* CIV POP */
+movss  xmm0,DWORD PTR [eax+94] // civ pop as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert civ pop int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'+'
+inc edx
+inc edx
+/* MIL POP */
+movss  xmm0,DWORD PTR [eax+A0] // mil pop as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert mil pop int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+add edx,ebx
+inc edx
+mov byte ptr [edx],'='
+inc edx
+inc edx
+/* TOTAL POP */
+movss  xmm0,DWORD PTR [eax+4C] // total pop as float
+cvttss2si ebx,xmm0
+pxor xmm0,xmm0
+/* convert total pop int to string */
+push eax
+push edi
+mov eax,ebx // number to convert
+mov edi,edx // buffer to write
+call int2str // no bounds checking performed
+mov ebx,eax
+pop edi
+pop eax
+
+pop edx
+pop ebx
+
+no_player_info:
+pop eax
+
+mov word ptr [eax+4],bx
+pop ebx
+push eax // arg4 for draw UIText
+mov ecx,40
+push ecx // arg3 for draw UIText
+push edx // arg2 for draw UIText
+lea eax,[ebp-74]
+push eax // arg1 for draw UIText
+lea ecx,[ebp-40]
+call DRAW_HIGHSCORE_FN+B
+non_highscore_text:
+
+pop edx // orig name
+pop eax // length of orig (backuped) name
+/* copy the backuped name to the UIText struct */
+mov ecx,eax
+xor ebx,ebx
+restore_origmsg_strcpy:
+mov bl,[esp+ecx-1]
+mov [edx+ecx-1],bl
+loop restore_origmsg_strcpy
+add esp,eax
+
+popad
+
+originalcode:
+
+exit:
+jmp returnhere
+
+nop
+nop
+nop
+
+get_player_info:
+push ebp
+mov ebp,esp
+push 00000000 // return value
+pushad
+sub esp,10
+/* STACK LAYOUT
+ * [ESP+00] -> Player Index
+ * [ESP+04] -> Length of compared nickname (without ':')
+ * [ESP+08] -> Base address of player name array
+ * [ESP+0C] -> Current index offset of player name array
+ */
+
+/* compare nickname string until the last occurence of ':' */
+xor ebx,ebx
+mov eax,edx
+dec eax
+xor ecx,ecx
+mov ecx,20
+loop_colon:
+inc eax
+cmp byte ptr [eax],3A
+cmove ebx,eax
+je loop_colon_finished
+cmp byte ptr [eax],0
+je loop_colon_finished
+loop loop_colon
+loop_colon_finished:
+test ebx,ebx
+jz get_player_info_finished
+mov [esp+4],ebx
+sub [esp+4],edx
+
+and [esp],0
+/*
+ * get player STRING list (MULTIPLAYER ONLY!)
+ * SINGLEPLAYER uses another memory location
+ * see cheat engine file
+ */
+mov eax,["AoK HD.exe"+006DB62C]
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+794]
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+5C]
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov [esp+8],eax
+mov [esp+C],0
+mov eax,[eax+BC] // nickname of player1
+
+/* compare highscore nickname with playerlist nickname */
+loop_players:
+mov ecx,[esp+4]
+cmp byte ptr [eax+ecx],0
+jne loop_nickname_cmp_fail
+cmp byte ptr [edx+ecx],3A
+jne loop_nickname_cmp_fail
+loop_nickname_cmp:
+xor ebx,ebx
+mov bl,[eax+ecx-1]
+cmp bl,[edx+ecx-1]
+jne loop_nickname_cmp_fail
+loop loop_nickname_cmp
+jmp loop_nickname_cmp_success
+loop_nickname_cmp_fail:
+inc [esp]
+cmp [esp],8
+jge get_player_info_finished
+add [esp+C],60
+mov ebx,[esp+C] // base address of player name array
+mov eax,[esp+8] // player name array index offset
+mov eax,[eax+ebx+BC] // nickname of playerI
+jmp loop_players
+loop_nickname_cmp_success:
+mov eax,[esp]
+inc eax
+mov ebx,8
+mul ebx
+mov ebx,eax
+mov eax,["AoK HD.exe"+9C7774]
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+4]
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+184] // address of player array
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+ebx] // address of player struct
+test eax,eax
+jz get_player_info_finished
+cmp eax,7FFFFFFF
+jg get_player_info_finished
+mov eax,[eax+3C] // the player
+mov [ebp-4],eax // return value
+
+get_player_info_finished:
+add esp,10
+popad
+pop eax // return value
+pop ebp
+ret
+
+// eax = number to stringify/output
+// edi = location of buffer
+int2str:
+push  edx
+push  ecx
+push  edi
+push  ebp
+mov   ebp,esp
+mov   ecx,A
+
+pushDigits:
+xor edx,edx
+div ecx
+add edx,30
+push edx
+test eax,eax
+jnz pushDigits
+mov eax,ebp
+sub eax,esp
+mov ecx,4
+xor edx,edx
+div ecx
+mov ecx,5
+sub ecx,eax
+js popDigits
+jz popDigits
+inc ecx
+prefixDigits:
+mov byte ptr [edi],20
+inc edi
+loop prefixDigits
+popDigits:
+pop eax
+stosb
+cmp esp,ebp
+jne popDigits
+
+mov   eax,edi
+pop   ebp
+pop   edi
+pop   ecx
+pop   edx
+sub   eax,edi
+ret
+
+
+HIGHSCORE_FN+13:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+/*
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+*/
+returnhere:
