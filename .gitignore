@@ -11,3 +11,4 @@
 *.idb
 *.pch
 /.vs
+/x64/Release
