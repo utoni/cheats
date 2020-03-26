@@ -1,9 +1,7 @@
-## Good ol' cheats
-Be careful, they are old, outdated or detected.
-Do NOT use them within multiplayer games!
+## ancient cheats
 
-This is my old cheat library, which I dont use anymore.
-I might release some newer hacks in the future, maybe ..
+old, ugly, detected.
+
 
 ![alt text](https://github.com/lnslbrty/cheats/blob/master/csgo_wh.png "CSGO Wallhack")
 ![alt text](https://github.com/lnslbrty/cheats/blob/master/csgo_wh2.png "CSGO Wallhack")
